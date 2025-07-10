@@ -95,7 +95,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onToggle }) => {
     else if (!conversationContext.askedAboutExperience)
       return "Have you worked with a coach before, or is this your first time?";
     else if (!conversationContext.askedAboutTimeframe)
-      return "When are you looking to get started? Soon or later?";
+      return "When are you lookineg to get started? Soon or later?";
     else
       return "Would you like me to help you schedule a consultation with a coach?";
   };
