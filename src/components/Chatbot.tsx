@@ -15,7 +15,8 @@ interface ChatbotProps {
 }
 
 const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onToggle }) => {
-  const API_BASE = 'http://localhost:5000'; // <-- Backend URL
+const API_BASE = 'https://chris-backend.vercel.app'; // <-- Deployed backend on Vercel
+
 
   const [messages, setMessages] = useState<Message[]>([
     {
