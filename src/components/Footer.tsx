@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Zap, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -75,11 +75,17 @@ const Footer = () => {
             </div>
             
             <div className="flex space-x-4">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
+              {[
+                { Icon: Facebook, href: "https://www.facebook.com/profile.php?id=61572367091196" },
+                { Icon: Youtube, href: "https://youtube.com/@lightworks-soulgrowth" },
+               
+              ].map(({ Icon, href }, index) => (
                 <a 
                   key={index}
-                  href="#" 
+                  href={href} 
                   className="relative group"
+                  target={href.startsWith('http') ? '_blank' : '_self'}
+                  rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 >
                   <div className="text-gray-400 hover:text-orange-400 transition-all duration-300 p-2 rounded-full hover:bg-orange-400/10"
                        style={{
