@@ -165,8 +165,7 @@ const API_BASE = 'https://chris-backend.vercel.app'; // <-- Deployed backend on 
     }
   };
 
-  const handleBookingSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleBookingSubmit = () => {
     if (bookingData.name && bookingData.email) {
       handleBooking(bookingData.name, bookingData.email);
     }
@@ -187,28 +186,40 @@ const API_BASE = 'https://chris-backend.vercel.app'; // <-- Deployed backend on 
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 50, scale: 0.95 }}
           transition={{ duration: 0.3 }}
-          className="fixed bottom-20 right-6 w-96 h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden z-40"
+          className="fixed bottom-20 right-6 w-96 h-[600px] bg-white rounded-2xl shadow-2xl border border-orange-200 overflow-hidden z-40"
+          style={{
+            boxShadow: '0 25px 50px -12px rgba(251, 146, 60, 0.25), 0 0 30px rgba(251, 146, 60, 0.1)',
+            background: 'linear-gradient(135deg, #ffffff 0%, #fff7ed 100%)'
+          }}
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-teal-600 p-4 text-white">
-            <div className="flex items-center justify-between">
+          <div className="bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 p-4 text-white relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-400/20 via-white/10 to-orange-600/20 animate-pulse"></div>
+            <div className="relative z-10 flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                  <Bot className="h-6 w-6" />
+                <div className="w-10 h-10 bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20"
+                     style={{
+                       background: 'radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.2) 100%)',
+                       boxShadow: '0 0 20px rgba(255,255,255,0.3)'
+                     }}>
+                  <Bot className="h-6 w-6 text-white drop-shadow-lg" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">Coaching Assistant</h3>
-                  <p className="text-sm opacity-90">Online now</p>
+                  <h3 className="font-semibold text-white drop-shadow-sm">Divine Assistant</h3>
+                  <p className="text-sm text-white/90 drop-shadow-sm">Guiding with light</p>
                 </div>
               </div>
-              <button onClick={onToggle} className="hover:text-white/90">
-                <X className="h-6 w-6" />
+              <button onClick={onToggle} className="hover:text-white/90 transition-colors">
+                <X className="h-6 w-6 drop-shadow-sm" />
               </button>
             </div>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 h-[400px]">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 h-[400px]" 
+               style={{
+                 background: 'linear-gradient(180deg, #ffffff 0%, #fefbf3 50%, #fff7ed 100%)'
+               }}>
             {messages.map((msg) => (
               <motion.div
                 key={msg.id}
@@ -219,16 +230,30 @@ const API_BASE = 'https://chris-backend.vercel.app'; // <-- Deployed backend on 
               >
                 <div className={`flex items-start space-x-2 max-w-[80%] ${msg.isBot ? '' : 'flex-row-reverse space-x-reverse'}`}>
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-white ${
-                      msg.isBot ? 'bg-gradient-to-r from-blue-600 to-teal-600' : 'bg-gray-500'
+                    className={`w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg ${
+                      msg.isBot 
+                        ? 'bg-gradient-to-br from-orange-400 to-orange-600' 
+                        : 'bg-gradient-to-br from-orange-300 to-orange-500'
                     }`}
+                    style={{
+                      boxShadow: msg.isBot 
+                        ? '0 4px 15px rgba(251, 146, 60, 0.4), 0 0 20px rgba(251, 146, 60, 0.2)' 
+                        : '0 4px 15px rgba(251, 146, 60, 0.3)'
+                    }}
                   >
                     {msg.isBot ? <Bot className="h-4 w-4" /> : <User className="h-4 w-4" />}
                   </div>
                   <div
-                    className={`p-3 rounded-lg ${
-                      msg.isBot ? 'bg-gray-100 text-gray-800' : 'bg-gradient-to-r from-blue-600 to-teal-600 text-white'
+                    className={`p-3 rounded-lg backdrop-blur-sm ${
+                      msg.isBot 
+                        ? 'bg-white/80 text-gray-800 border border-orange-100' 
+                        : 'bg-gradient-to-r from-orange-400 to-orange-500 text-white'
                     }`}
+                    style={{
+                      boxShadow: msg.isBot 
+                        ? '0 8px 25px rgba(251, 146, 60, 0.1), 0 0 15px rgba(255, 255, 255, 0.5)' 
+                        : '0 8px 25px rgba(251, 146, 60, 0.3)'
+                    }}
                   >
                     <p className="text-sm">{msg.text}</p>
                     <p className="text-xs mt-1 opacity-70">
@@ -242,14 +267,20 @@ const API_BASE = 'https://chris-backend.vercel.app'; // <-- Deployed backend on 
             {isLoading && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-teal-600 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center shadow-lg"
+                       style={{
+                         boxShadow: '0 4px 15px rgba(251, 146, 60, 0.4), 0 0 20px rgba(251, 146, 60, 0.2)'
+                       }}>
                     <Bot className="h-4 w-4 text-white" />
                   </div>
-                  <div className="bg-gray-100 p-3 rounded-lg">
+                  <div className="bg-white/80 p-3 rounded-lg backdrop-blur-sm border border-orange-100"
+                       style={{
+                         boxShadow: '0 8px 25px rgba(251, 146, 60, 0.1), 0 0 15px rgba(255, 255, 255, 0.5)'
+                       }}>
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100" />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200" />
+                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce" />
+                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce delay-100" />
+                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce delay-200" />
                     </div>
                   </div>
                 </div>
@@ -260,15 +291,18 @@ const API_BASE = 'https://chris-backend.vercel.app'; // <-- Deployed backend on 
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t border-gray-200">
+          <div className="p-4 border-t border-orange-200 bg-white/90 backdrop-blur-sm">
             {bookingMode ? (
-              <form onSubmit={handleBookingSubmit} className="space-y-3">
+              <div className="space-y-3">
                 <input
                   type="text"
                   placeholder="Your name"
                   value={bookingData.name}
                   onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
-                  className="w-full p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600"
+                  className="w-full p-2 border border-orange-200 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 bg-white/80 backdrop-blur-sm"
+                  style={{
+                    boxShadow: '0 4px 15px rgba(251, 146, 60, 0.1)'
+                  }}
                   required
                 />
                 <input
@@ -276,17 +310,23 @@ const API_BASE = 'https://chris-backend.vercel.app'; // <-- Deployed backend on 
                   placeholder="Your email"
                   value={bookingData.email}
                   onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
-                  className="w-full p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600"
+                  className="w-full p-2 border border-orange-200 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 bg-white/80 backdrop-blur-sm"
+                  style={{
+                    boxShadow: '0 4px 15px rgba(251, 146, 60, 0.1)'
+                  }}
                   required
                 />
                 <button
-                  type="submit"
+                  onClick={handleBookingSubmit}
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-blue-600 to-teal-600 text-white p-2 rounded-lg hover:brightness-110 disabled:opacity-50"
+                  className="w-full bg-gradient-to-r from-orange-400 to-orange-600 text-white p-2 rounded-lg hover:from-orange-500 hover:to-orange-700 disabled:opacity-50 transition-all duration-200 shadow-lg"
+                  style={{
+                    boxShadow: '0 8px 25px rgba(251, 146, 60, 0.3), 0 0 20px rgba(251, 146, 60, 0.2)'
+                  }}
                 >
                   {isLoading ? 'Booking...' : 'Book Meeting'}
                 </button>
-              </form>
+              </div>
             ) : (
               <div className="flex items-center space-x-2">
                 <textarea
@@ -295,13 +335,19 @@ const API_BASE = 'https://chris-backend.vercel.app'; // <-- Deployed backend on 
                   onChange={(e) => setInputText(e.target.value)}
                   onKeyDown={handleKeyPress}
                   placeholder="Type your message..."
-                  className="flex-1 resize-none p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600"
+                  className="flex-1 resize-none p-2 border border-orange-200 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 bg-white/80 backdrop-blur-sm"
+                  style={{
+                    boxShadow: '0 4px 15px rgba(251, 146, 60, 0.1)'
+                  }}
                   disabled={isLoading}
                 />
                 <button
                   onClick={handleSendMessage}
                   disabled={isLoading || !inputText.trim()}
-                  className="p-2 rounded-full bg-gradient-to-r from-blue-600 to-teal-600 text-white hover:brightness-110 disabled:opacity-50"
+                  className="p-2 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 text-white hover:from-orange-500 hover:to-orange-700 disabled:opacity-50 transition-all duration-200 shadow-lg"
+                  style={{
+                    boxShadow: '0 8px 25px rgba(251, 146, 60, 0.3), 0 0 20px rgba(251, 146, 60, 0.2)'
+                  }}
                   aria-label="Send"
                 >
                   <Send className="w-5 h-5" />
