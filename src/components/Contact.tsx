@@ -8,12 +8,38 @@ const Contact = () => {
     message: ''
   });
 
-  const handleSubmit = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const API_BASE = 'https://chris-backend.vercel.app';
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '', message: '' });
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch(`${API_BASE}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setSubmitStatus({ type: 'success', message: 'Divine message sent successfully!' });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        const error = await response.json();
+        setSubmitStatus({ type: 'error', message: error.message || 'Failed to send message' });
+      }
+    } catch (error) {
+      setSubmitStatus({ type: 'error', message: 'Network error. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -137,6 +163,17 @@ const Contact = () => {
                 Send Divine Message
               </h3>
               
+              {/* Status Message */}
+              {submitStatus && (
+                <div className={`mb-6 p-4 rounded-lg text-center ${
+                  submitStatus.type === 'success' 
+                    ? 'bg-green-100 text-green-800 border border-green-300' 
+                    : 'bg-red-100 text-red-800 border border-red-300'
+                }`}>
+                  {submitStatus.message}
+                </div>
+              )}
+              
               <div className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -149,7 +186,8 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border-2 border-orange-200 rounded-lg focus:border-orange-400 focus:outline-none transition-all duration-300 bg-white/70 backdrop-blur-sm"
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-3 border-2 border-orange-200 rounded-lg focus:border-orange-400 focus:outline-none transition-all duration-300 bg-white/70 backdrop-blur-sm disabled:opacity-50"
                     style={{
                       boxShadow: '0 0 20px rgba(255, 165, 0, 0.1)'
                     }}
@@ -168,7 +206,8 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border-2 border-orange-200 rounded-lg focus:border-orange-400 focus:outline-none transition-all duration-300 bg-white/70 backdrop-blur-sm"
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-3 border-2 border-orange-200 rounded-lg focus:border-orange-400 focus:outline-none transition-all duration-300 bg-white/70 backdrop-blur-sm disabled:opacity-50"
                     style={{
                       boxShadow: '0 0 20px rgba(255, 165, 0, 0.1)'
                     }}
@@ -187,7 +226,8 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows={4}
-                    className="w-full px-4 py-3 border-2 border-orange-200 rounded-lg focus:border-orange-400 focus:outline-none transition-all duration-300 resize-none bg-white/70 backdrop-blur-sm"
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-3 border-2 border-orange-200 rounded-lg focus:border-orange-400 focus:outline-none transition-all duration-300 resize-none bg-white/70 backdrop-blur-sm disabled:opacity-50"
                     style={{
                       boxShadow: '0 0 20px rgba(255, 165, 0, 0.1)'
                     }}
@@ -196,27 +236,34 @@ const Contact = () => {
                 </div>
                 
                 <button
-                  onClick={handleSubmit}
-                  className="w-full py-4 px-6 rounded-lg font-semibold flex items-center justify-center space-x-2 transition-all duration-300 relative overflow-hidden group"
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-4 px-6 rounded-lg font-semibold flex items-center justify-center space-x-2 transition-all duration-300 relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
                     background: 'linear-gradient(135deg, #ff8c00 0%, #ffa500 100%)',
                     boxShadow: '0 0 30px rgba(255, 165, 0, 0.5)',
                     color: 'white'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.boxShadow = '0 0 50px rgba(255, 165, 0, 0.8)';
-                    e.target.style.transform = 'translateY(-2px)';
+                    if (!isSubmitting) {
+                      e.target.style.boxShadow = '0 0 50px rgba(255, 165, 0, 0.8)';
+                      e.target.style.transform = 'translateY(-2px)';
+                    }
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.boxShadow = '0 0 30px rgba(255, 165, 0, 0.5)';
-                    e.target.style.transform = 'translateY(0)';
+                    if (!isSubmitting) {
+                      e.target.style.boxShadow = '0 0 30px rgba(255, 165, 0, 0.5)';
+                      e.target.style.transform = 'translateY(0)';
+                    }
                   }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
                   <Send className="h-5 w-5 relative z-10" />
-                  <span className="relative z-10">Send Sacred Message</span>
+                  <span className="relative z-10">
+                    {isSubmitting ? 'Sending Sacred Message...' : 'Send Sacred Message'}
+                  </span>
                 </button>
-                              </div>
+              </div>
             </div>
           </div>
         </div>
