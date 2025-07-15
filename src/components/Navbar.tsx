@@ -18,9 +18,8 @@ const Navbar = () => {
   const navItems = [
     { name: 'Home', href: '/' },
     { name: 'Services', href: '#services' },
-    { name: 'Portfolio', href: '#portfolio' },
     { name: 'About', href: '/about' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Contact', href: '/contact' }
   ];
 
   return (
@@ -63,10 +62,15 @@ const Navbar = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-amber-100 to-orange-100 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
                 </a>
               ))}
-              <button className="ml-4 relative overflow-hidden bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/25 hover:scale-105 group">
-                <span className="relative z-10">Get Started</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-500 via-orange-500 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </button>
+             
+<Link
+  to="https://calendly.com/chris-lightworks/30min"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="ml-4 relative overflow-hidden bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/25 hover:scale-105 group"
+>
+  <span className="relative z-10">Get Started</span>
+</Link>
             </div>
           </div>
 
@@ -110,7 +114,7 @@ const Navbar = () => {
   to="https://calendly.com/chris-lightworks/30min"
   target="_blank"
   rel="noopener noreferrer"
-  className="ml-4 relative overflow-hidden bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/25 hover:scale-105 group"
+  className="ml-4 relative overflow-hidden bg-gradient-to-r from-amber-5e00 via-orange-500 to-pink-500 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/25 hover:scale-105 group"
 >
   <span className="relative z-10">Get Started</span>
 </Link>

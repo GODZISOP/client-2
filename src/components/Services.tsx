@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Sparkles, Sun, Star, Zap, Heart, Users } from 'lucide-react';
 
@@ -210,16 +211,22 @@ const Services = () => {
                   a spiritual journey of growth, Chris brings compassion, wisdom, and divine light to 
                   every session.
                 </p>
-                <motion.button
-                  className="px-8 py-4 bg-gradient-to-r from-orange-400 to-orange-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                  whileHover={{ 
-                    scale: 1.05,
-                    boxShadow: "0 0 30px rgba(251, 146, 60, 0.6)"
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Connect with Chris
-                </motion.button>
+              <Link
+  to="https://www.facebook.com/people/Light-Works-Spiritual-Community/61572367091196/"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <motion.button
+    className="px-8 py-4 bg-gradient-to-r from-orange-400 to-orange-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+    whileHover={{
+      scale: 1.05,
+      boxShadow: "0 0 30px rgba(251, 146, 60, 0.6)"
+    }}
+    whileTap={{ scale: 0.95 }}
+  >
+    Connect with Chris
+  </motion.button>
+</Link>
               </div>
             </div>
           </div>
@@ -392,16 +399,23 @@ const Services = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <motion.button
-                className="px-10 py-5 bg-gradient-to-r from-orange-400 to-orange-600 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 0 40px rgba(251, 146, 60, 0.6)"
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Begin Your Healing Journey
-              </motion.button>
+               <Link
+  to="https://calendly.com/chris-lightworks/30min"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <motion.button
+    className="px-8 py-4 bg-gradient-to-r from-orange-400 to-orange-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+    whileHover={{
+      scale: 1.05,
+      boxShadow: "0 0 30px rgba(251, 146, 60, 0.6)"
+    }}
+    whileTap={{ scale: 0.95 }}
+  >
+                 Begin Your Healing Journey
+
+  </motion.button>
+</Link>
             </motion.div>
           </div>
         </motion.div>

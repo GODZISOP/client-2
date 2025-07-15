@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Play, Heart, Users, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -33,15 +34,16 @@ const Hero = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
-            <button className="bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 text-white px-8 py-4 rounded-full font-semibold flex items-center justify-center space-x-2 hover:shadow-xl hover:shadow-orange-500/25 transition-all duration-300 group transform hover:scale-105">
-              <span>Begin Your Journey</span>
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+           <Link
+             to="https://calendly.com/chris-lightworks/30min"
+             target="_blank"
+             rel="noopener noreferrer"
+             className="ml-4 relative overflow-hidden bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/25 hover:scale-105 group"
+           >
+             <span className="relative z-10">Get Started</span>
+           </Link>
             
-            <button className="bg-white/80 backdrop-blur-sm text-gray-700 px-8 py-4 rounded-full font-semibold flex items-center justify-center space-x-2 border border-orange-200 hover:border-orange-400 hover:text-orange-600 transition-all duration-300 hover:bg-white">
-              <Play className="h-5 w-5" />
-              <span>Explore Our Community</span>
-            </button>
+      
           </div>
           
           <div className="flex items-center justify-center lg:justify-start space-x-8">
