@@ -95,22 +95,27 @@ const API_BASE = 'https://chris-backend.vercel.app'; // <-- Deployed backend on 
   };
 
   const updateConversationContext = (userMessage: string) => {
-    const lower = userMessage.toLowerCase();
-    if (!conversationContext.askedAboutGoals) {
-      setConversationContext((prev) => ({ ...prev, askedAboutGoals: true }));
-    } else if (!conversationContext.askedAboutExperience) {
-      setConversationContext((prev) => ({ ...prev, askedAboutExperience: true }));
-    } else if (!conversationContext.askedAboutTimeframe) {
-      setConversationContext((prev) => ({ ...prev, askedAboutTimeframe: true }));
-    } else if (!conversationContext.readyToBook) {
-      const yesWords = ['yes', 'ok', 'sure', 'please', 'book', 'schedule'];
-      if (yesWords.some((word) => lower.includes(word))) {
-        setConversationContext((prev) => ({ ...prev, readyToBook: true }));
-        return true;
-      }
+  const lower = userMessage.toLowerCase();
+  let updatedContext = { ...conversationContext };
+
+  if (!updatedContext.askedAboutGoals) {
+    updatedContext.askedAboutGoals = true;
+  } else if (!updatedContext.askedAboutExperience) {
+    updatedContext.askedAboutExperience = true;
+  } else if (!updatedContext.askedAboutTimeframe) {
+    updatedContext.askedAboutTimeframe = true;
+  } else if (!updatedContext.readyToBook) {
+    const yesWords = ['yes', 'ok', 'sure', 'please', 'book', 'schedule'];
+    if (yesWords.some((word) => lower.includes(word))) {
+      updatedContext.readyToBook = true;
+      setConversationContext(updatedContext);
+      return { updated: updatedContext, showBooking: true };
     }
-    return false;
-  };
+  }
+
+  setConversationContext(updatedContext);
+  return { updated: updatedContext, showBooking: false };
+};
 
   const extractName = (text: string): string | null => {
   // Check for phrases like "My name is Zain" or "I'm Zain"
