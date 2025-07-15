@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { motion } from 'framer-motion';
-
+import About from './components/about';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About'; // Fixed: Capital 'A' - make sure your file is named 'About.jsx' not 'about.jsx'
 import Services from './components/Services';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
