@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Lightbulb, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+import lightimage from "../components/light.jpg"
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -23,28 +26,26 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'bg-white/95 backdrop-blur-xl border-b border-gray-200/50 shadow-lg' 
-        : 'bg-white/80 backdrop-blur-md border-b border-gray-200/30'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex items-center space-x-3 group cursor-pointer">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-400 via-orange-500 to-pink-500 rounded-xl blur opacity-75 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative bg-gradient-to-r from-amber-400 via-orange-500 to-pink-500 p-2.5 rounded-xl">
-                <Lightbulb className="h-6 w-6 text-white" />
-              </div>
-            </div>
-            <div className="flex items-center space-x-1">
-              <span className="text-2xl font-bold bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 bg-clip-text text-transparent">
-                Lightworks
-              </span>
-              <Sparkles className="h-4 w-4 text-amber-500 animate-pulse" />
-            </div>
-          </div>
+   <nav className={`fixed w-full top-0 z-50 transition-all duration-300 h-32 ${
+  scrolled
+    ? 'bg-white/95 backdrop-blur-xl border-b border-gray-200/50 shadow-lg mt-30'
+    : 'bg-white/80 backdrop-blur-md border-b border-gray-200/30 mt-0'
+}`}>
+  <div className="max-w-7xl mx-auto px-14 sm:px-6 lg:px-8">
+    <div className="flex justify-between items-center h-full"> {/* full height */}
+      {/* Logo */}
+      <div className="flex items-center space-x-3 group cursor-pointer rounded-xl relative overflow-hidden py-4">
+        {/* Content container */}
+        <div className="flex items-center space-x-2 relative rounded-xl p-2 bg-white/30 backdrop-blur-sm">
+          <img
+            src={lightimage}
+            alt="Lightworks Logo"
+            className="w-28 h-20 object-contain rounded-xl" // h-13 replaced
+          />
+        </div>
+      </div>
+
+
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">

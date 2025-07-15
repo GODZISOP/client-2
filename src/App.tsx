@@ -9,6 +9,7 @@ import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
 import Contact from './components/Contact';
+const image ="../"; // Update with your actual image path
 
 const Home = () => (
   <>
