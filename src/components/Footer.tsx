@@ -59,7 +59,7 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-gray-300 max-w-md mb-6 leading-relaxed">
-              Illuminating souls and empowering divine transformation through sacred coaching and celestial guidance for spiritual awakening.
+              Illuminating souls and empowering divine transformation throug sacred coaching and celestial guidance for spiritual awakening.
             </p>
             
             {/* Sacred Contact Info */}
