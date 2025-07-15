@@ -18,29 +18,39 @@ const Contact = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-   try {
-  const response = await fetch(`${API_BASE}/api/contact`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(formData),
-  });
+    // Optional frontend validation (uncomment if you want)
+    /*
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setSubmitStatus({ type: 'error', message: 'Please fill out all fields' });
+      setIsSubmitting(false);
+      return;
+    }
+    */
 
-  const result = await response.json();
+    try {
+      const response = await fetch(`${API_BASE}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-  if (response.ok) {
-    setSubmitStatus({ type: 'success', message: 'Divine message sent successfully!' });
-    setFormData({ name: '', email: '', message: '' });
-  } else {
-    console.error('Server error:', result);
-    setSubmitStatus({ type: 'error', message: result.error || result.message || 'Failed to send message' });
-  }
+      const result = await response.json();
 
-} catch (error) {
-  console.error('Network or unexpected error:', error);
-  setSubmitStatus({ type: 'error', message: 'Network error. Please try again.' });
-}
+      if (response.ok) {
+        setSubmitStatus({ type: 'success', message: 'Divine message sent successfully!' });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        console.error('Server error:', result);
+        setSubmitStatus({ type: 'error', message: result.error || result.message || 'Failed to send message' });
+      }
+    } catch (error) {
+      console.error('Network or unexpected error:', error);
+      setSubmitStatus({ type: 'error', message: 'Network error. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -56,7 +66,6 @@ const Contact = () => {
     }}>
       {/* Divine Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Floating Orbs */}
         {[...Array(20)].map((_, i) => (
           <div
             key={i}
@@ -73,19 +82,15 @@ const Contact = () => {
             }}
           />
         ))}
-        
-        {/* Radial Glow */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full opacity-20"
-             style={{
-               background: 'radial-gradient(circle, rgba(255, 165, 0, 0.3) 0%, transparent 70%)',
-               filter: 'blur(40px)'
-             }}
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 165, 0, 0.3) 0%, transparent 70%)',
+            filter: 'blur(40px)'
+          }}
         />
-        
-        {/* Divine Rays */}
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 h-32 bg-gradient-to-b from-orange-400 to-transparent opacity-30 animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 transform translate-x-1/2 w-1 h-24 bg-gradient-to-t from-orange-400 to-transparent opacity-30 animate-pulse" style={{animationDelay: '1s'}} />
-        <div className="absolute top-1/4 right-0 transform -translate-y-1/2 w-24 h-1 bg-gradient-to-l from-orange-400 to-transparent opacity-30 animate-pulse" style={{animationDelay: '2s'}} />
+        <div className="absolute bottom-0 right-1/4 transform translate-x-1/2 w-1 h-24 bg-gradient-to-t from-orange-400 to-transparent opacity-30 animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/4 right-0 transform -translate-y-1/2 w-24 h-1 bg-gradient-to-l from-orange-400 to-transparent opacity-30 animate-pulse" style={{ animationDelay: '2s' }} />
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
@@ -97,7 +102,7 @@ const Contact = () => {
             <div className="absolute -inset-2 bg-gradient-to-r from-orange-400 to-orange-600 rounded-lg opacity-20 blur-xl animate-pulse" />
           </h2>
           <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
-            Reach out to us throuh the ethereal realm of communication. Let divine guidance illuminate your path to transformation.
+            Reach out to us through the ethereal realm of communication. Let divine guidance illuminate your path to transformation.
           </p>
         </div>
 
@@ -108,7 +113,7 @@ const Contact = () => {
               Sacred Channels
               <div className="absolute -bottom-2 left-0 w-20 h-1 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full" />
             </h3>
-            
+
             <div className="space-y-6">
               {[
                 { icon: Mail, title: "Divine Email", info: "chris@lightworks.love" },
@@ -118,9 +123,9 @@ const Contact = () => {
                 <div key={index} className="flex items-center space-x-4 group">
                   <div className="relative">
                     <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-4 rounded-full relative z-10 group-hover:shadow-2xl transition-all duration-300"
-                         style={{
-                           boxShadow: '0 0 30px rgba(255, 165, 0, 0.5)'
-                         }}>
+                      style={{
+                        boxShadow: '0 0 30px rgba(255, 165, 0, 0.5)'
+                      }}>
                       <item.icon className="h-6 w-6 text-white" />
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full opacity-30 blur-md group-hover:opacity-60 transition-opacity duration-300" />
@@ -132,13 +137,13 @@ const Contact = () => {
                 </div>
               ))}
             </div>
-            
+
             <div className="mt-8 p-6 rounded-xl relative overflow-hidden backdrop-blur-sm"
-                 style={{
-                   background: 'rgba(255, 255, 255, 0.1)',
-                   border: '1px solid rgba(255, 165, 0, 0.3)',
-                   boxShadow: '0 0 40px rgba(255, 165, 0, 0.2)'
-                 }}>
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '1px solid rgba(255, 165, 0, 0.3)',
+                boxShadow: '0 0 40px rgba(255, 165, 0, 0.2)'
+              }}>
               <div className="absolute inset-0 bg-gradient-to-r from-orange-400/10 to-orange-600/10 rounded-xl" />
               <div className="relative z-10">
                 <h4 className="font-semibold text-white mb-3 text-lg">Sacred Hours</h4>
@@ -155,27 +160,30 @@ const Contact = () => {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-600 rounded-2xl opacity-20 blur-xl" />
             <div className="relative z-10 p-8 rounded-2xl backdrop-blur-sm"
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.95)',
-                    border: '1px solid rgba(255, 165, 0, 0.3)',
-                    boxShadow: '0 0 50px rgba(255, 165, 0, 0.3)'
-                  }}>
+              style={{
+                background: 'rgba(255, 255, 255, 0.95)',
+                border: '1px solid rgba(255, 165, 0, 0.3)',
+                boxShadow: '0 0 50px rgba(255, 165, 0, 0.3)'
+              }}>
               <h3 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
                 Send Divine Message
               </h3>
-              
+
               {/* Status Message */}
               {submitStatus && (
-                <div className={`mb-6 p-4 rounded-lg text-center ${
-                  submitStatus.type === 'success' 
-                    ? 'bg-green-100 text-green-800 border border-green-300' 
-                    : 'bg-red-100 text-red-800 border border-red-300'
-                }`}>
+                <div
+                  aria-live="polite"
+                  className={`mb-6 p-4 rounded-lg text-center ${
+                    submitStatus.type === 'success'
+                      ? 'bg-green-100 text-green-800 border border-green-300'
+                      : 'bg-red-100 text-red-800 border border-red-300'
+                  }`}
+                >
                   {submitStatus.message}
                 </div>
               )}
-              
-              <div className="space-y-6">
+
+              <form onSubmit={handleSubmit} noValidate className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                     Your Sacred Name
@@ -195,7 +203,7 @@ const Contact = () => {
                     placeholder="Enter your divine name"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                     Ethereal Email
@@ -215,7 +223,7 @@ const Contact = () => {
                     placeholder="Enter your sacred email"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                     Divine Message
@@ -235,7 +243,7 @@ const Contact = () => {
                     placeholder="Share your divine aspirations and sacred goals..."
                   />
                 </div>
-                
+
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -264,7 +272,7 @@ const Contact = () => {
                     {isSubmitting ? 'Sending Sacred Message...' : 'Send Sacred Message'}
                   </span>
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>
