@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Lightbulb, Sparkles } from 'lucide-react';
-
+import { Link } from 'react-router-dom';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -105,12 +105,15 @@ const Navbar = () => {
                 {item.name}
               </a>
             ))}
-            <button 
-              className="w-full mt-3 bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 text-white px-6 py-3 rounded-lg font-medium hover:shadow-lg transition-all duration-200"
-              onClick={() => setIsOpen(false)}
-            >
-              Get Started
-            </button>
+  
+<Link
+  to="https://calendly.com/chris-lightworks/30min"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="ml-4 relative overflow-hidden bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/25 hover:scale-105 group"
+>
+  <span className="relative z-10">Get Started</span>
+</Link>
           </div>
         </div>
       </div>
