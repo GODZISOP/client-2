@@ -18,28 +18,29 @@ const Contact = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    try {
-      const response = await fetch(`${API_BASE}/api/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+   try {
+  const response = await fetch(`${API_BASE}/api/contact`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  });
 
-      if (response.ok) {
-        const result = await response.json();
-        setSubmitStatus({ type: 'success', message: 'Divine message sent successfully!' });
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        const error = await response.json();
-        setSubmitStatus({ type: 'error', message: error.message || 'Failed to send message' });
-      }
-    } catch (error) {
-      setSubmitStatus({ type: 'error', message: 'Network error. Please try again.' });
-    } finally {
-      setIsSubmitting(false);
-    }
+  const result = await response.json();
+
+  if (response.ok) {
+    setSubmitStatus({ type: 'success', message: 'Divine message sent successfully!' });
+    setFormData({ name: '', email: '', message: '' });
+  } else {
+    console.error('Server error:', result);
+    setSubmitStatus({ type: 'error', message: result.error || result.message || 'Failed to send message' });
+  }
+
+} catch (error) {
+  console.error('Network or unexpected error:', error);
+  setSubmitStatus({ type: 'error', message: 'Network error. Please try again.' });
+}
   };
 
   const handleChange = (e) => {
