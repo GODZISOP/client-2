@@ -97,7 +97,7 @@ const Contact = () => {
             <div className="absolute -inset-2 bg-gradient-to-r from-orange-400 to-orange-600 rounded-lg opacity-20 blur-xl animate-pulse" />
           </h2>
           <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
-            Reach out to us through the ethereal realm of communication. Let divine guidance illuminate your path to transformation.
+            Reach out to us throuh the ethereal realm of communication. Let divine guidance illuminate your path to transformation.
           </p>
         </div>
 
