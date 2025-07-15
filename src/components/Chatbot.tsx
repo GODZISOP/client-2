@@ -112,58 +112,75 @@ const API_BASE = 'https://chris-backend.vercel.app'; // <-- Deployed backend on 
     return false;
   };
 
-  const handleSendMessage = async () => {
-    if (!inputText.trim()) return;
+  const extractName = (text: string): string | null => {
+  // Check for phrases like "My name is Zain" or "I'm Zain"
+  const nameMatch = text.match(/my name is (\w+)/i) || text.match(/i(?:'| a)m (\w+)/i);
+  return nameMatch ? nameMatch[1] : null;
+};
 
-    const userMessage = inputText.trim();
-    addMessage(userMessage, false);
-    setInputText('');
-    setIsLoading(true);
+const handleSendMessage = async () => {
+  if (!inputText.trim()) return;
 
-    const bookingKeywords = ['book', 'schedule', 'meeting', 'appointment', 'consultation'];
-    const wantsToBook = bookingKeywords.some((k) => userMessage.toLowerCase().includes(k));
+  const userMessage = inputText.trim();
+  addMessage(userMessage, false);
+  setInputText('');
+  setIsLoading(true);
 
-    if (wantsToBook && !conversationContext.interestedInBooking) {
-      setConversationContext((prev) => ({ ...prev, interestedInBooking: true }));
+  // Try to extract name from the user's message
+  const extractedName = extractName(userMessage);
+  if (extractedName) {
+    // If a name is found, store it in bookingData
+    setBookingData((prev) => ({ ...prev, name: extractedName }));
+    addMessage(`Hi ${extractedName}!`, true);  // Respond with "Hi [name]!"
+    setIsLoading(false);
+    return; // Skip the rest of the logic if the name is recognized
+  }
+
+  const bookingKeywords = ['book', 'schedule', 'meeting', 'appointment', 'consultation'];
+  const wantsToBook = bookingKeywords.some((k) => userMessage.toLowerCase().includes(k));
+
+  if (wantsToBook && !conversationContext.interestedInBooking) {
+    setConversationContext((prev) => ({ ...prev, interestedInBooking: true }));
+    addMessage(getNextQuestion(), true);
+    setIsLoading(false);
+    return;
+  }
+
+  if (conversationContext.interestedInBooking && !conversationContext.readyToBook) {
+    const showBookingForm = updateConversationContext(userMessage);
+    if (showBookingForm) {
+      setBookingMode(true);
+      addMessage("Great! Please share your name and email so I can schedule your meeting.", true);
+      setIsLoading(false);
+      return;
+    } else {
       addMessage(getNextQuestion(), true);
       setIsLoading(false);
       return;
     }
+  }
 
-    if (conversationContext.interestedInBooking && !conversationContext.readyToBook) {
-      const showBookingForm = updateConversationContext(userMessage);
-      if (showBookingForm) {
-        setBookingMode(true);
-        addMessage("Great! Please share your name and email so I can schedule your meeting.", true);
-        setIsLoading(false);
-        return;
-      } else {
-        addMessage(getNextQuestion(), true);
-        setIsLoading(false);
-        return;
-      }
+  // Normal chat fallback (call backend chat API)
+  try {
+    const response = await fetch(`${API_BASE}/api/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: userMessage }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      addMessage(data.response, true);
+    } else {
+      throw new Error(data.error || 'Chat API error');
     }
+  } catch (error) {
+    console.error('Chat error:', error);
+    addMessage('I had trouble connecting. You can still book a meeting by entering your name and email.', true);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
-    // Normal chat fallback (call backend chat API)
-    try {
-      const response = await fetch(`${API_BASE}/api/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        addMessage(data.response, true);
-      } else {
-        throw new Error(data.error || 'Chat API error');
-      }
-    } catch (error) {
-      console.error('Chat error:', error);
-      addMessage('I had trouble connecting. You can still book a meeting by entering your name and email.', true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleBookingSubmit = () => {
     if (bookingData.name && bookingData.email) {
